@@ -2980,7 +2980,7 @@ namespace Pchp.CodeAnalysis.Semantics
                 cg.Emit_ArgumentsIntoArray(_arguments, default(PhpSignatureMask)); // PhpValue[]
 
                 return cg.EmitMethodAccess(
-                    stack: cg.EmitCall(ILOpCode.Callvirt, cg.CoreTypes.IPhpCallable.Symbol.LookupMember<MethodSymbol>("Invoke")),
+                    stack: cg.EmitCall(ILOpCode.Callvirt, cg.CoreTypes.IPhpCallable.Symbol.LookupMember<MethodSymbol>("Invoke", x => x.Parameters[1].Type.IsArray())),
                     method: null,
                     access: this.Access);
             }

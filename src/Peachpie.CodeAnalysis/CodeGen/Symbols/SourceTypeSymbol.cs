@@ -87,9 +87,14 @@ namespace Pchp.CodeAnalysis.Symbols
             //
             // IPhpCallable.Invoke(Context <ctx>, PhpVaue[] arguments)
             //
+            static bool IsArrayInvoke(Symbol symbol)
+            {
+                // TODO: Switch to using params ReadOnlySpan<PhpValue> when we can
+                return symbol is MethodSymbol method && method.Parameters[1].Type.IsArray();
+            }
             var invoke = new SynthesizedMethodSymbol(this, iphpcallable.FullName + ".Invoke", false, true, DeclaringCompilation.CoreTypes.PhpValue, isfinal: true)
             {
-                ExplicitOverride = (MethodSymbol)iphpcallable.Symbol.GetMembers("Invoke").Single(),
+                ExplicitOverride = (MethodSymbol)iphpcallable.Symbol.GetMembers("Invoke").Single(IsArrayInvoke),
                 ForwardedCall = __invoke,
             };
             invoke.SetParameters(

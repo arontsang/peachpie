@@ -1594,7 +1594,7 @@ namespace Pchp.Core.Dynamic
             var ps = new ParameterExpression[] {
                 Expression.Parameter(typeof(Context), "ctx"),
                 Expression.Parameter(typeof(object), "target"),
-                Expression.Parameter(typeof(PhpValue[]), "argv") };
+                Expression.Parameter(typeof(ReadOnlySpan<PhpValue>), "argv") };
 
             // invoke targets
             var invocation = OverloadBinder.BindOverloadCall(typeof(PhpValue), ps[1], methods, ps[0], ps[2], true, lateStaticType);

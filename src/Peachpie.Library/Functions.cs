@@ -143,7 +143,7 @@ namespace Pchp.Library.Standard
         /// <param name="function">Target callback.</param>
 		/// <param name="args">The arguments.</param>
 		/// <returns>The return value.</returns>
-		public static PhpValue call_user_func(Context ctx, IPhpCallable function, params PhpValue[] args)
+		public static PhpValue call_user_func(Context ctx, IPhpCallable function, params ReadOnlySpan<PhpValue> args)
         {
             if (function == null)
             {
@@ -179,7 +179,7 @@ namespace Pchp.Library.Standard
         /// This function must be called within a method context, it can't be used outside a class.
         /// It uses the late static binding.
         /// </summary>
-        public static PhpValue forward_static_call(Context ctx, [ImportValue(ImportValueAttribute.ValueSpec.CallerStaticClass)] PhpTypeInfo @static, IPhpCallable function, params PhpValue[] args)
+        public static PhpValue forward_static_call(Context ctx, [ImportValue(ImportValueAttribute.ValueSpec.CallerStaticClass)] PhpTypeInfo @static, IPhpCallable function, params ReadOnlySpan<PhpValue> args)
         {
             return (function is PhpCallback phpc)
                 ? phpc.BindToStatic(ctx, @static)(ctx, args)
